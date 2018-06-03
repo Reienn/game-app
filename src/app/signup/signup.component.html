@@ -1,3 +1,13 @@
-<p>
-  signup works!
-</p>
+<div id="auth">
+  <h1>Zagraj w IMAGO online!</h1>
+  <form id="signupForm">
+      <h2>Zaloguj się</h2>
+      <p *ngIf="err" class="err">Błąd. {{ err }}</p>
+      <p *ngIf="msg">{{ msg }}</p>
+      <input type="email" placeholder="Adres e-mail" name="mail" required>
+      <input type="text" placeholder="Nazwa użytkownika" name="name" required>
+      <input type="password" placeholder="Hasło" name="psw" required>
+      <input type="password" placeholder="Powtórz hasło" name="pswCheck" required>
+      <button id="signup" (click)="signup()">Utwórz konto</button>						
+  </form>
+</div>

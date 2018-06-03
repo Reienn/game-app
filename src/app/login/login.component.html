@@ -1,3 +1,11 @@
-<p>
-  login works!
-</p>
+<div id="auth">
+  <h1>Zagraj w IMAGO online!</h1>
+  <form id="loginForm">
+      <h2>Zaloguj się</h2>
+      <p *ngIf="err" class="err">Błąd. {{ err }}</p>
+      <p *ngIf="msg">{{ msg }}</p>
+      <input type="text" placeholder="Nazwa użytkownika" name="name" required>
+      <input type="password" placeholder="Hasło" name="psw" required>
+      <button id="login" (click)="login()">Zaloguj się</button>					
+  </form>
+</div>

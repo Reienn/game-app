@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../user';
 
 @Component({
   selector: 'app-signup',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-
+  err: string;
+  msg: string;
   constructor() { }
 
   ngOnInit() {
+  }
+  signup() {
+    console.log('signup method');
   }
 
 }
