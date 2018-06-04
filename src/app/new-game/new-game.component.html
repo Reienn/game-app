@@ -1,3 +1,19 @@
-<p>
-  new-game works!
-</p>
+<div id=game>
+  <div id="newGame" *ngIf="!started">
+    <h2>Nowa gra</h2>
+    <h3>Gracze przy stole:</h3>
+    <ul id="playersList"></ul>
+    <button id="startGame" (click)="starGame()" disabled >Zacznij</button><br><br>
+    <button (click)="leaveGame()">Wyjdź</button>
+    <p *ngIf="msg">{{ msg }}</p>
+    <span id="waitingList"></span>
+  </div>
+
+  <div id="navbar">
+    <button id="toggleNav" (click)="toggleNav()">&#9776;</button>
+    <div id="gameTitle">IMAGO online, <b><span id="username">{{ user.name }}</span></b></div>																							
+  </div>
+
+  <app-table></app-table>
+  <app-chat></app-chat>
+</div>

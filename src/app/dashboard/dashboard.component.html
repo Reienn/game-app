@@ -1,3 +1,9 @@
-<p>
-  dashboard works!
-</p>
+<div id="enter">
+  <h1>Zagraj w IMAGO online!</h1>
+  <p>Jesteś zalogowany jako <b><span id="username">{{ user.name }}</span></b></p><br>
+  <h3>Nowy stół:</h3>
+  <button (click)="newTable()">Załóż nowy stół</button><br><br>
+  <h3>Dostępne stoły:</h3>
+  <div id="showTables"></div>       
+  <br><a href="/logout"><button>Wyloguj</button></a>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-chat',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-
-  constructor() { }
+  user: User;
+  constructor() {
+    this.user = new User;
+    this.user.name = 'Ala';
+  }
 
   ngOnInit() {
   }
 
+  sendMessage() {
+    console.log('send message method');
+  }
 }

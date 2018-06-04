@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-new-game',
@@ -6,10 +7,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-game.component.css']
 })
 export class NewGameComponent implements OnInit {
-
-  constructor() { }
+  started: boolean;
+  user: User;
+  constructor() {
+    this.user = new User;
+    this.user.name = 'Ala';
+    this.started = false;
+  }
 
   ngOnInit() {
+  }
+
+  startGame() {
+    console.log('Start game method');
+  }
+
+  leaveGame() {
+    console.log('Leave game method');
+  }
+
+  toggleNav() {
+    console.log('Toggle nav method');
   }
 
 }
