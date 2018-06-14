@@ -10,7 +10,6 @@ export class NewGameComponent implements OnInit {
   started: boolean;
   user: User;
   constructor() {
-    this.user = new User;
     this.user.name = 'Ala';
     this.started = false;
   }

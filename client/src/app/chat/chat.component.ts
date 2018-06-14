@@ -9,7 +9,6 @@ import { User } from '../models/user';
 export class ChatComponent implements OnInit {
   user: User;
   constructor() {
-    this.user = new User;
     this.user.name = 'Ala';
   }
 
