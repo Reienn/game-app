@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 const GamePlaySchema = new mongoose.Schema({
   active: Boolean,
   answer: String,
-  players: [{
-    user: String,
-    active: Boolean
-  }],
+  players: {
+    waiting: [],
+    ready: [],
+  },
+  
   chat: [{
     user: String,
     message: String

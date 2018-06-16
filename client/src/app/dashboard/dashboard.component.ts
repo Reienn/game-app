@@ -13,9 +13,9 @@ export class DashboardComponent implements OnInit {
   user: User;
   gamePlayList;
   constructor(
+    private router: Router,
     private authenticationService: AuthenticationService,
-    private socketService: SocketService,
-    private router: Router
+    private socketService: SocketService
   ) {
     this.user = new User;
     this.user.name = '';

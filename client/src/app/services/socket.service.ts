@@ -8,18 +8,38 @@ import * as socketIo from 'socket.io-client';
 })
 export class SocketService {
   private socket;
+  gameId;
 
-  constructor(private route: ActivatedRoute) {
-    this.socket = socketIo('http://localhost:3000/' + this.route.snapshot.root.children[0].params.id);
+  constructor(
+    private route: ActivatedRoute
+  ) {
   }
 /*
   newGamePlay() {
     this.socket.emit('newGamePlay');
   }
   */
+  setSocket() {
+    this.gameId = this.route.snapshot.root.children[0].params.id;
+    this.socket = socketIo('http://localhost:3000/' + this.gameId);
+  }
+
+  getPlayers() {
+    return new Observable<any>(observer => {
+     // this.socket.emit('getInit', 'players');
+      this.socket.on('players', players => {
+        observer.next(players);
+      });
+    });
+  }
+
+  updatePlayers(playersUpdate) {
+    this.socket.emit('players', playersUpdate);
+  }
 
   getCards() {
     return new Observable<Array<{}>>(observer => {
+      // this.socket.emit('getInit', 'cards');
       this.socket.on('cards', cards => {
         observer.next(cards);
       });
@@ -32,6 +52,7 @@ export class SocketService {
 
   getChat() {
     return new Observable<Array<{}>>(observer => {
+      // this.socket.emit('getInit', 'chat');
       this.socket.on('chat', chat => {
         observer.next(chat);
       });

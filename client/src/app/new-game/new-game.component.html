@@ -2,11 +2,15 @@
   <div id="newGame" *ngIf="!started">
     <h2>Nowa gra</h2>
     <h3>Gracze przy stole:</h3>
-    <ul id="playersList"></ul>
+    <ul class="playersList">
+        <li *ngFor="let player of playersList.waiting">{{ player }}</li>
+    </ul>
     <button id="startGame" (click)="starGame()" disabled >Zacznij</button><br><br>
     <button (click)="leaveGame()">Wyjdź</button>
     <p *ngIf="msg">{{ msg }}</p>
-    <span id="waitingList"></span>
+    <ul class="playersList">
+        <li *ngFor="let player of playersList.ready">{{ player }}</li>
+    </ul>
   </div>
 
   <div id="navbar">

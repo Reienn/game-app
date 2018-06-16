@@ -20,10 +20,11 @@ export class TableComponent implements OnInit {
   constructor(
     private socketService: SocketService
   ) {
-    this.click = false;
   }
 
   ngOnInit() {
+    this.click = false;
+    this.cards = [];
     this.socketService.getCards().subscribe(
       cards => {
         this.cards = cards;

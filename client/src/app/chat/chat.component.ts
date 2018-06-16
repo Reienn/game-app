@@ -17,11 +17,12 @@ export class ChatComponent implements OnInit {
     private socketService: SocketService
   ) {
     this.user = new User;
-    this.user.name = '';
-    this.isTyping = '';
   }
 
   ngOnInit() {
+    this.user.name = '';
+    this.isTyping = '';
+    this.chat = [];
     this.authenticationService.getDashboard().subscribe(
       dashboard => {
         this.user.name = dashboard.dashboard.user.user.name;

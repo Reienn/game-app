@@ -1,60 +1,88 @@
-const socket = require('socket.io');
 const GamePlay = require('../models/game-play');
 
 module.exports.socketIo = function(server) {
-  const io = socket(server);
+  const io = require('socket.io')(server);
+
+  let gameCards = [];
+  let gameChats = [];
+  let gamePlayers = [];
+  let groupSockets = [];
 
   GamePlay.find({}, function(err, gamePlays){
     if(err) { return next(err); }
-    gamePlays.forEach( el => {   
-      let gameCards = el.cards;
-      let gameChats = el.chat;
-      const groupSocket = io.of('/' + el._id);      
+    
+    gamePlays.forEach( (el, i) => {   
+      gameCards[i] = el.cards;
+      gameChats[i] = el.chat;
+      gamePlayers[i] = el.players;
       
-      groupSocket.on('connection', group => {
-        console.log('Socket connected: ' + el._id);
+      groupSockets[i] = io.of('/' + el._id).on('connection', socket => {
+        console.log('Socket connected, game id: ' + el._id);
 
-        group.emit('cards', gameCards);
-        group.emit('chat', gameChats);
-      
-        /*
-        group.on('getGamePlay', () => {
-          group.broadcast.emit('cards', gameCards);
-        });
-        */
-        group.on('cards', updated => {
-          gameCards = updated;
-          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { cards: gameCards }}, function(err){
+        socket.emit('cards', gameCards[i]);
+        socket.emit('chat', gameChats[i]);
+        socket.emit('players', gamePlayers[i]);
+
+        socket.on('players', updated => {
+          switch(updated.change) {
+            case 'add_waiting':
+              if (!gamePlayers[i].waiting.includes(updated.user)) {
+                gamePlayers[i].waiting.push(updated.user);
+              }
+              break;
+            case 'remove_waiting':
+              let indexW = gamePlayers[i].waiting.indexOf(updated.user);
+              if (indexW > -1) {
+                gamePlayers[i].waiting.splice(indexW, 1);
+              }
+              break;
+            case 'add_ready':
+              if (!gamePlayers[i].ready.includes(updated.user)) {
+                gamePlayers[i].ready.push(updated.user);
+              }
+              break;
+            case 'remove_ready':
+              let indexR = gamePlayers[i].ready.indexOf(updated.user);
+              if (indexR > -1) {
+                gamePlayers[i].ready.splice(indexR, 1);
+              }
+              break;
+            default:
+              throw('Unknown update request');
+          }
+          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: {waiting: gamePlayers[i].waiting, ready: gamePlayers[i].ready} }}, function(err){
             if(err){throw err;}
           });
-          group.broadcast.emit('cards', gameCards);
+          socket.emit('players', gamePlayers[i]);
+        });   
+
+        socket.on('cards', updated => {
+          gameCards[i] = updated;
+          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { cards: gameCards[i] }}, function(err){
+            if(err){throw err;}
+          });
+          socket.broadcast.emit('cards', gameCards[i]);
         });        
 
-        group.on('chat', updated => {
-          gameChats.push(updated);
-          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { chat: gameChats }}, function(err){
+        socket.on('chat', updated => {
+          gameChats[i].push(updated);
+          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { chat: gameChats[i] }}, function(err){
             if(err){throw err;}
           });
-          group.broadcast.emit('chat', gameChats);
+          socket.broadcast.emit('chat', gameChats[i]);
         });
 
-        group.on('typing', user => {
-          group.broadcast.emit('typing', user);
+        socket.on('typing', user => {
+          socket.broadcast.emit('typing', user);
         });
 
-        group.on('not-typing', user => {
-          group.broadcast.emit('not-typing', '');
+        socket.on('not-typing', user => {
+          socket.broadcast.emit('not-typing', '');
         });
         
       });
-
-
-
-
     });
+
   });
-
-
- 
   
 }

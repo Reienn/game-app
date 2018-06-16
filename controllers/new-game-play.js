@@ -4,6 +4,10 @@ module.exports.newGamePlay = function(req, res, next) {
   let gamePlay = new GamePlay({
     active: false,
     answer: 'Gwiezdne Wojny',
+    players: {
+      waiting: [],
+      ready: [],
+    },
     cards: [
       {id: '001', x: 100, y: 20, fill: '#444444'},
       {id: '002', x: 250, y: 20, fill: '#ff550d'},
