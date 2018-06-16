@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +13,6 @@ export class SignupComponent implements OnInit {
   user: any = {};
   constructor(
     private authenticationService: AuthenticationService,
-    // private route: ActivatedRoute,
     private router: Router
   ) {}
 

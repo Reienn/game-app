@@ -1,9 +1,13 @@
 <div id="imagoChat">
   <div id="chatWindow">
       <div id="turn"></div>
-      <div id="output"></div>
-      <div id="feedback"></div>
+      <div id="output">
+        <p *ngFor="let chatMessage of chat">
+          <strong>{{ chatMessage.user }}</strong>: {{ chatMessage.message }}
+        </p>
+      </div>
+      <div *ngIf="isTyping != ''" id="feedback">{{ isTyping }} pisze wiadomość...</div>
   </div>
-  <input id="message" type="text" placeholder="Wiadomość"/>
-  <button id="send" (click)="sendMessage()">wyślij</button><br>
+  <input id="message" type="text" placeholder="Wiadomość" #message (keypress)="typing()" (blur)="notTyping()"/>
+  <button id="send" (click)="sendMessage(message.value); message.value=''">wyślij</button><br>
 </div>

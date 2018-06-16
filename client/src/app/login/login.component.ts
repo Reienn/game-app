@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthGuardService } from '../services/auth-guard.service';
 
 @Component({
@@ -16,12 +16,10 @@ export class LoginComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private authGuardService: AuthGuardService,
-    // private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit() {
-    // this.authenticationService.logout();
     if (localStorage.getItem('currentUser')) {
       this.router.navigate(['/dashboard']);
     }

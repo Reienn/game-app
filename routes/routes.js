@@ -1,8 +1,9 @@
 const cors = require('cors');
 
-const loginComponent = require('../controllers/login');
-const signupComponent = require('../controllers/signup');
-// const gameController = require('../controllers/game');
+const loginController= require('../controllers/login');
+const signupController = require('../controllers/signup');
+const dashboardController = require('../controllers/dashboard');
+const gameController = require('../controllers/new-game-play');
 const jwt = require('../services/jwt');
 
 
@@ -17,14 +18,13 @@ module.exports = function(app) {
     res.send('Hello from Express!')
   }); 
 
-  app.post('/login', loginComponent.login);
+  app.post('/login', loginController.login);
 
-  app.post('/signup', signupComponent.signup);
+  app.post('/signup', signupController.signup);
 
-  app.get('/dashboard', jwt.verifyToken, (req, res) => {
-    let user = req.userData;
-    res.json({user});
-  });
+  app.get('/dashboard', jwt.verifyToken, dashboardController.dashboard);
+
+  app.post('/new-game-play', jwt.verifyToken, gameController.newGamePlay);
 }
 
 

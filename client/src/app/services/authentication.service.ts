@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -41,13 +40,24 @@ export class AuthenticationService {
 
   getDashboard() {
     return this.http.get<any>('http://localhost:3000/dashboard')
-      .pipe(map((user: any) => {
-        if (user) {
-          return user;
+      .pipe(map((dashboard: any) => {
+        if (dashboard) {
+          return dashboard;
         }
       }), catchError((err) => {
         throw(err.error);
       }));
+  }
+
+  newGamePlay() {
+    return this.http.post<any>('http://localhost:3000/new-game-play', true)
+    .pipe(map((gamePlayList: any) => {
+      if (gamePlayList) {
+        return gamePlayList;
+      }
+    }), catchError((err) => {
+      throw(err.error);
+    }));
   }
 
   logout() {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
+import { SocketService } from '../services/socket.service';
 import { User } from '../models/user';
 
 @Component({
@@ -8,14 +10,50 @@ import { User } from '../models/user';
 })
 export class ChatComponent implements OnInit {
   user: User;
-  constructor() {
-    this.user.name = 'Ala';
+  chat;
+  isTyping;
+  constructor(
+    private authenticationService: AuthenticationService,
+    private socketService: SocketService
+  ) {
+    this.user = new User;
+    this.user.name = '';
+    this.isTyping = '';
   }
 
   ngOnInit() {
+    this.authenticationService.getDashboard().subscribe(
+      dashboard => {
+        this.user.name = dashboard.dashboard.user.user.name;
+      },
+      err => {
+        this.authenticationService.logout();
+      });
+
+      this.socketService.getChat().subscribe(
+        chat => {
+          this.chat = chat;
+        }
+      );
+
+      this.socketService.getTyping().subscribe(
+        typing => {
+          this.isTyping = typing;
+        }
+      );
   }
 
-  sendMessage() {
-    console.log('send message method');
+  sendMessage(message) {
+    this.chat.push({user: this.user.name, message: message});
+    this.socketService.sendMessage(this.user.name, message);
   }
+
+  typing() {
+    this.socketService.typing(this.user.name);
+  }
+
+  notTyping() {
+    this.socketService.notTyping(this.user.name);
+  }
+
 }

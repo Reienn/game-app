@@ -16,6 +16,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { SocketService } from './services/socket.service';
 
 
 const appRoutes: Routes = [
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
     AuthenticationService,
     AuthGuardService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+    SocketService
   ],
   bootstrap: [AppComponent]
 })

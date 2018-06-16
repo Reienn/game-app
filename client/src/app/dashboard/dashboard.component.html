@@ -1,9 +1,19 @@
 <div id="enter">
   <h1>Zagraj w IMAGO online!</h1>
   <p>Jesteś zalogowany jako <b><span id="username">{{ user.name }}</span></b></p><br>
-  <h3>Nowy stół:</h3>
-  <button (click)="newTable()">Załóż nowy stół</button><br><br>
-  <h3>Dostępne stoły:</h3>
-  <div id="showTables"></div>       
+  <h3>Dostępne rozgrywki:</h3>
+  <p *ngIf="gamePlayList.length == 0">Brak dostępnych rozgrywek</p>
+  <div *ngIf="gamePlayList.length != 0" id="showTables">
+    <p *ngFor="let gamePlay of gamePlayList">
+      <button      
+      (click)="enterGame($event, gamePlay)"
+      [id]="gamePlay"
+      class="enterGame">
+        Dołącz
+    </button>
+    </p>
+  </div>
+  <h3>Nowa rozgrywka:</h3>
+  <button (click)="newGamePlay()">Dodaj rozgrywkę</button><br><br>      
   <br><button (click)="logout()">Wyloguj</button>
 </div>

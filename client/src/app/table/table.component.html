@@ -1,1 +1,17 @@
-<div id="table"></div>
+<div id="table" #tableElement>
+    <svg id="svg" height="700" width="800">
+        <rect *ngFor="let card of cards"            
+            class="gameCard"
+            [id]="card.id"
+            [attr.x]="card.x"
+            [attr.y]="card.y"
+            width="100"
+            height="100"
+            [attr.fill]="card.fill"
+            (mousedown)="startMove($event)"
+            (mousemove)="move($event)"
+            (mouseup)="endMove($event)"
+            (mouseout)="endMove($event)"
+        />
+    </svg>
+</div>

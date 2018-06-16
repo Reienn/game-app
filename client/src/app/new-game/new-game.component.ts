@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
 import { User } from '../models/user';
 
 @Component({
@@ -9,12 +10,22 @@ import { User } from '../models/user';
 export class NewGameComponent implements OnInit {
   started: boolean;
   user: User;
-  constructor() {
-    this.user.name = 'Ala';
-    this.started = false;
+  constructor(
+    private authenticationService: AuthenticationService
+  ) {
+    this.user = new User;
+    this.user.name = '';
+    this.started = true;
   }
 
   ngOnInit() {
+    this.authenticationService.getDashboard().subscribe(
+      dashboard => {
+        this.user.name = dashboard.dashboard.user.user.name;
+      },
+      err => {
+        this.authenticationService.logout();
+      });
   }
 
   startGame() {
