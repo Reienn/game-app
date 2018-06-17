@@ -1,16 +1,33 @@
 <div id=game>
-  <div id="newGame" *ngIf="!started">
+  <div id="newGame" *ngIf="!active">
     <h2>Nowa gra</h2>
-    <h3>Gracze przy stole:</h3>
+    <h3 *ngIf="this.playersList.waiting.length > 0">Gracze przy stole:</h3>
     <ul class="playersList">
         <li *ngFor="let player of playersList.waiting">{{ player }}</li>
     </ul>
-    <button id="startGame" (click)="starGame()" disabled >Zacznij</button><br><br>
-    <button (click)="leaveGame()">Wyjdź</button>
-    <p *ngIf="msg">{{ msg }}</p>
-    <ul class="playersList">
+    <span *ngIf="!ready">
+      <button id="startGame" (click)="startGame()" [disabled]="(this.playersList.waiting.length + this.playersList.ready.length) < 2" >Zacznij</button><br><br>
+      <p *ngIf="(this.playersList.waiting.length + this.playersList.ready.length) < 2">Za mało graczy by zacząć grę</p>
+    </span>
+    
+    <span *ngIf="this.playersList.ready.length > 0">
+       <h3>Dołączyli:</h3>
+       <ul class="playersList">
         <li *ngFor="let player of playersList.ready">{{ player }}</li>
-    </ul>
+      </ul>
+    </span>
+
+    <p *ngIf="ready && this.playersList.waiting.length > 0">Gra rozpocznie się gdy dołączą wszyscy gracze przy stole</p><br>
+    
+    <button (click)="leaveGame()">Wyjdź</button>
+  </div>
+
+  <div id="win" *ngIf="win.status">
+    <div id="winner">
+      <h3>Gratulacje, {{ win.user }}</h3>
+      <p>Hasło brzmiało: {{ win.message }}</p>
+    </div>
+    <button (click)="leaveGame()">Wyjdź</button>
   </div>
 
   <div id="navbar">
@@ -18,6 +35,6 @@
     <div id="gameTitle">IMAGO online, <b><span id="username">{{ user.name }}</span></b></div>																							
   </div>
 
-  <app-table></app-table>
-  <app-chat></app-chat>
+  <app-table *ngIf="!win.status"></app-table>
+  <app-chat *ngIf="!win.status"></app-chat>
 </div>

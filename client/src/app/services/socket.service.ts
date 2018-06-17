@@ -14,11 +14,7 @@ export class SocketService {
     private route: ActivatedRoute
   ) {
   }
-/*
-  newGamePlay() {
-    this.socket.emit('newGamePlay');
-  }
-  */
+
   setSocket() {
     this.socket = socketIo('http://localhost:3000');
   }
@@ -29,7 +25,7 @@ export class SocketService {
   }
 
   getGameList() {
-    return new Observable<Array<any>>(observer => {
+    return new Observable<Array<{any}>>(observer => {
       this.socket.on('game-list', gameList => {
         observer.next(gameList);
       });
@@ -48,8 +44,20 @@ export class SocketService {
     });
   }
 
+  getWin() {
+    return new Observable<any>(observer => {
+      this.socket.on('win', win => {
+        observer.next(win);
+      });
+    });
+  }
+
   updatePlayers(playersUpdate) {
     this.socket.emit('players', playersUpdate);
+  }
+
+  activate() {
+    this.socket.emit('activate', true);
   }
 
   getCards() {

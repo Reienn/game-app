@@ -6,11 +6,13 @@
   <div *ngIf="gamePlayList.length != 0" id="showTables">
     <p *ngFor="let gamePlay of gamePlayList">
       <button      
-      (click)="enterGame($event, gamePlay)"
-      [id]="gamePlay"
+      (click)="enterGame($event, gamePlay.id)"
+      [id]="gamePlay.id"
       class="enterGame">
         Dołącz
     </button>
+      <span *ngFor="let player of gamePlay.players.waiting" > {{ player }}</span> 
+      <span *ngFor="let player of gamePlay.players.ready" > {{ player }}</span>
     </p>
   </div>
   <h3>Nowa rozgrywka:</h3>

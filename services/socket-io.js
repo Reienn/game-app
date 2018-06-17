@@ -1,41 +1,30 @@
 const GamePlay = require('../models/game-play');
-const createNamespaceService = require('./create-namespace');
+const createNamespaceService = require('../services/create-namespace');
+const newGameController = require('../controllers/new-game-play');
 
 module.exports.socketIo = function(server) {
   const io = require('socket.io')(server);
 
-  let gamesDetails = {
-    gameList: [],
-    gameCards: [],
-    gameChats: [],
-    gamePlayers: [],
-    groupSockets: []
-  }
- 
-
-let gameList = [];
-
   GamePlay.find({}, function(err, res){
 		if(err){throw err;}
-    //console.log(res);
-    res.forEach((el) => {
-     // console.log(gamesDetails);
-      /*gamesDetails.*/gameList.push(el._id);
-      createNamespaceService.createNamespace(io, el);
-    });
-  });
 
-  io.on('connection', socket => {
-    socket.emit('game-list', gameList);
+    io.on('connection', socket => {
+      console.log('Dashboard socket connected');
+      let gameList = [];
+      res.forEach((el) => {
+        gameList.push({id: el._id, players: el.players});
+        createNamespaceService.createNamespace(io, el);
+      });      
+      socket.emit('game-list', gameList);
 
-    socket.on('new-game-play', data => {
-      const newGameController = require('../controllers/new-game-play');
-      newGameController.newGamePlay.then( newGame => {
-        gameList.push(newGame._id);
-        createNamespaceService.createNamespace(io, newGame);
-        io.emit('game-list', gameList);
+      socket.on('new-game-play', data => {
+        newGameController.newGamePlay(io);
       });
     });
+
+
   });
+
+ 
   
 }

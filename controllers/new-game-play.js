@@ -1,6 +1,18 @@
 const GamePlay = require('../models/game-play');
+const createNamespaceService = require('../services/create-namespace');
 
-module.exports.newGamePlay = new Promise((resolve, reject) => {
+function emitList(io) {
+  GamePlay.find({active: false}, function(err, res){
+    if(err){throw err;}
+    let gameList = [];
+    res.forEach((listEl) => {
+      gameList.push({id: listEl._id, players: listEl.players});
+    });
+    io.emit('game-list', gameList);
+  });
+};
+
+module.exports.newGamePlay = function(io){
   let gamePlay = new GamePlay({
     active: false,
     answer: 'Gwiezdne Wojny',
@@ -17,8 +29,9 @@ module.exports.newGamePlay = new Promise((resolve, reject) => {
     ]   
   });
   gamePlay.save(function(err, newGame){
-    if(err) { reject(err); }
+    if(err) { throw(err); }
+    createNamespaceService.createNamespace(io, newGame);
+    emitList(io);
     console.log('New game created, id: ' + newGame._id);
-    resolve(newGame);
   });
-});
+};

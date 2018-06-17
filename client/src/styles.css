@@ -61,10 +61,6 @@ body{
     padding: 0;
   }
   
-  #win{
-    display: none;
-  }
-  
   #navbar{
     width: 100%;
     background: #575ed8;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { SocketService } from '../services/socket.service';
@@ -9,12 +9,18 @@ import { User } from '../models/user';
   templateUrl: './new-game.component.html',
   styleUrls: ['./new-game.component.css']
 })
-export class NewGameComponent implements OnInit {
-  started: boolean;
+export class NewGameComponent implements OnInit, OnDestroy {
+  ready: boolean;
+  active: boolean;
   user: User;
   playersList: {
     waiting: Array<string>,
     ready: Array<string>,
+  };
+  win: {
+    user: string,
+    message: string,
+    status: boolean
   };
 
   constructor(
@@ -23,7 +29,13 @@ export class NewGameComponent implements OnInit {
     private socketService: SocketService
   ) {
     this.user = new User;
-    this.started = true;
+    this.active = false;
+    this.ready = false;
+    this.win = {
+      user: '',
+      message: '',
+      status: false
+    };
   }
 
   ngOnInit() {
@@ -32,12 +44,12 @@ export class NewGameComponent implements OnInit {
       waiting: [],
       ready: []
     };
-
     this.socketService.setGroupSocket();
 
     this.authenticationService.authUser().subscribe(
       user => {
         this.user.name = user.user.user.name;
+        this.socketService.updatePlayers({user: this.user.name, change: 'add_waiting'});
       },
       err => {
         this.authenticationService.logout();
@@ -46,22 +58,42 @@ export class NewGameComponent implements OnInit {
     this.socketService.getPlayers().subscribe(
       players => {
         this.playersList = players;
+        if (this.playersList.waiting.length === 0 && this.playersList.ready.length > 1) {
+          this.active = true;
+          this.socketService.activate();
+        }
+      }
+    );
+
+    this.socketService.getWin().subscribe(
+      win => {
+        this.win = win;
       }
     );
   }
 
+  ngOnDestroy() {
+    this.leaveGame();
+  }
+
   startGame() {
-    console.log('Start game method');
+    this.socketService.updatePlayers({user: this.user.name, change: 'remove_waiting'});
+    this.socketService.updatePlayers({user: this.user.name, change: 'add_ready'});
+
+    let indexW = this.playersList.waiting.indexOf(this.user.name);
+    if (indexW > -1) {
+      this.playersList.waiting.splice(indexW, 1);
+    }
+
+    this.ready = true;
   }
 
   leaveGame() {
     this.socketService.updatePlayers({user: this.user.name, change: 'remove_waiting'});
+    this.socketService.updatePlayers({user: this.user.name, change: 'remove_ready'});
+    this.ready = false;
     this.router.navigate(['/dashboard']);
 
-  }
-
-  toggleNav() {
-    console.log('Toggle nav method');
   }
 
 }

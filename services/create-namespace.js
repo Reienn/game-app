@@ -1,7 +1,18 @@
 const GamePlay = require('../models/game-play');
 
+function emitList(io) {
+  GamePlay.find({active: false}, function(err, res){
+    if(err){throw err;}
+    let gameList = [];
+    res.forEach((listEl) => {
+      gameList.push({id: listEl._id, players: listEl.players});
+    });
+    io.emit('game-list', gameList);
+  });
+};
+
 module.exports.createNamespace = function(io, el) {
-  
+
   el.socket = io.of('/' + el._id).on('connection', socket => {
     console.log('Socket connected, game id: ' + el._id);
 
@@ -36,11 +47,30 @@ module.exports.createNamespace = function(io, el) {
         default:
           throw('Unknown update request');
       }
-      GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: {waiting: el.players.waiting, ready: el.players.ready} }}, function(err){
+      if(el.players.waiting.length == 0 && el.players.ready.length == 0){
+        GamePlay.deleteOne({_id: el._id}, function(err){
+          if(err){throw err;}
+        });
+        socket.disconnect();
+        console.log('Game ' + el._id + ' is over');
+      } else {
+        GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: {waiting: el.players.waiting, ready: el.players.ready} }}, function(err){
+          if(err){throw err;}
+          emitList(io);
+        });
+        el.socket.emit('players', el.players);
+      }
+      
+    });
+
+    socket.on('activate', status => {
+      el.active = status;
+      console.log('Game ' + el._id + ' active')
+      GamePlay.findOneAndUpdate({_id: el._id}, { $set: { active: el.active }}, function(err){
         if(err){throw err;}
+        emitList(io);
       });
-      socket.emit('players', el.players);
-    });   
+    });
 
     socket.on('cards', updated => {
       el.cards = updated;
@@ -51,11 +81,18 @@ module.exports.createNamespace = function(io, el) {
     });        
 
     socket.on('chat', updated => {
-      el.chat.push(updated);
-      GamePlay.findOneAndUpdate({_id: el._id}, { $set: { chat: el.chat }}, function(err){
-        if(err){throw err;}
-      });
-      socket.broadcast.emit('chat', el.chat);
+      if (updated.message == el.answer){
+        updated.status = true;
+        el.socket.emit('win', updated);
+        console.log(updated);
+      } else {
+        el.chat.push(updated);
+        GamePlay.findOneAndUpdate({_id: el._id}, { $set: { chat: el.chat }}, function(err){
+          if(err){throw err;}
+        });
+        socket.broadcast.emit('chat', el.chat);
+      }
+     
     });
 
     socket.on('typing', user => {
