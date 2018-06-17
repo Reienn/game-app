@@ -20,13 +20,28 @@ export class SocketService {
   }
   */
   setSocket() {
+    this.socket = socketIo('http://localhost:3000');
+  }
+
+  setGroupSocket() {
     this.gameId = this.route.snapshot.root.children[0].params.id;
     this.socket = socketIo('http://localhost:3000/' + this.gameId);
   }
 
+  getGameList() {
+    return new Observable<Array<any>>(observer => {
+      this.socket.on('game-list', gameList => {
+        observer.next(gameList);
+      });
+    });
+  }
+
+  newGamePlay() {
+    this.socket.emit('new-game-play', 'add');
+  }
+
   getPlayers() {
     return new Observable<any>(observer => {
-     // this.socket.emit('getInit', 'players');
       this.socket.on('players', players => {
         observer.next(players);
       });
@@ -39,7 +54,6 @@ export class SocketService {
 
   getCards() {
     return new Observable<Array<{}>>(observer => {
-      // this.socket.emit('getInit', 'cards');
       this.socket.on('cards', cards => {
         observer.next(cards);
       });
@@ -52,7 +66,6 @@ export class SocketService {
 
   getChat() {
     return new Observable<Array<{}>>(observer => {
-      // this.socket.emit('getInit', 'chat');
       this.socket.on('chat', chat => {
         observer.next(chat);
       });

@@ -23,21 +23,21 @@ export class ChatComponent implements OnInit {
     this.user.name = '';
     this.isTyping = '';
     this.chat = [];
-    this.authenticationService.getDashboard().subscribe(
-      dashboard => {
-        this.user.name = dashboard.dashboard.user.user.name;
+    this.authenticationService.authUser().subscribe(
+      user => {
+        this.user.name = user.user.user.name;
       },
       err => {
         this.authenticationService.logout();
       });
 
-      this.socketService.getChat().subscribe(
+    this.socketService.getChat().subscribe(
         chat => {
           this.chat = chat;
         }
       );
 
-      this.socketService.getTyping().subscribe(
+    this.socketService.getTyping().subscribe(
         typing => {
           this.isTyping = typing;
         }

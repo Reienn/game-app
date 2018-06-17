@@ -33,12 +33,11 @@ export class NewGameComponent implements OnInit {
       ready: []
     };
 
-    this.socketService.setSocket();
+    this.socketService.setGroupSocket();
 
-    this.authenticationService.getDashboard().subscribe(
-      dashboard => {
-        this.user.name = dashboard.dashboard.user.user.name;
-        this.socketService.updatePlayers({user: this.user.name, change: 'add_waiting'});
+    this.authenticationService.authUser().subscribe(
+      user => {
+        this.user.name = user.user.user.name;
       },
       err => {
         this.authenticationService.logout();

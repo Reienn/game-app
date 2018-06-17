@@ -1,6 +1,6 @@
 const GamePlay = require('../models/game-play');
 
-module.exports.newGamePlay = function(req, res, next) {
+module.exports.newGamePlay = new Promise((resolve, reject) => {
   let gamePlay = new GamePlay({
     active: false,
     answer: 'Gwiezdne Wojny',
@@ -16,18 +16,9 @@ module.exports.newGamePlay = function(req, res, next) {
       {id: '005', x: 100, y: 150, fill: '#b21a1a'}
     ]   
   });
-  gamePlay.save(function(err){
-    if(err) { return next(err); }
-    console.log('New game created');
+  gamePlay.save(function(err, newGame){
+    if(err) { reject(err); }
+    console.log('New game created, id: ' + newGame._id);
+    resolve(newGame);
   });
-
-  let gamePlayList = [];
-  GamePlay.find({}, function(err, gamePlays){
-    if(err) { return next(err); }
-    gamePlays.forEach( el => {
-      gamePlayList.push(el._id);
-    });
-    res.json({gamePlayList});
-  });
-  
-}
+});

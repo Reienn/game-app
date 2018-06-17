@@ -23,24 +23,24 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authenticationService.getDashboard().subscribe(
-      dashboard => {
-        this.user.name = dashboard.dashboard.user.user.name;
-        this.gamePlayList = dashboard.dashboard.gamePlayList;
+    this.authenticationService.authUser().subscribe(
+      user => {
+        this.user.name = user.user.user.name;
       },
       err => {
         this.authenticationService.logout();
+      });
+
+    this.socketService.setSocket();
+
+    this.socketService.getGameList().subscribe(
+      gameList => {
+        this.gamePlayList = gameList;
       });
   }
 
   newGamePlay() {
-    this.authenticationService.newGamePlay().subscribe(
-      gamePlayList => {
-        this.gamePlayList = gamePlayList.gamePlayList;
-      },
-      err => {
-        this.authenticationService.logout();
-      });
+    this.socketService.newGamePlay();
   }
 
   enterGame(ev, gamePlayId) {
