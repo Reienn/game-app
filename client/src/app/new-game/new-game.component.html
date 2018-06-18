@@ -24,7 +24,7 @@
 
   <div id="win" *ngIf="win.status">
     <div id="winner">
-      <h3>Gratulacje, {{ win.user }}</h3>
+      <h3>Wygrywa {{ win.user }}</h3>
       <p>Hasło brzmiało: {{ win.message }}</p>
     </div>
     <button (click)="leaveGame()">Wyjdź</button>

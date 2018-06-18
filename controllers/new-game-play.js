@@ -20,6 +20,7 @@ module.exports.newGamePlay = function(io){
       waiting: [],
       ready: [],
     },
+    activePlayer: 0,
     cards: [
       {id: '001', x: 100, y: 20, fill: '#444444'},
       {id: '002', x: 250, y: 20, fill: '#ff550d'},

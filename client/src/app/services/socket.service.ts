@@ -44,6 +44,14 @@ export class SocketService {
     });
   }
 
+  getAnswer() {
+    return new Observable<any>(observer => {
+      this.socket.on('answer', answerData => {
+        observer.next(answerData);
+      });
+    });
+  }
+
   getWin() {
     return new Observable<any>(observer => {
       this.socket.on('win', win => {

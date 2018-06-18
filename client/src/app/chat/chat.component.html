@@ -1,6 +1,9 @@
 <div id="imagoChat">
   <div id="chatWindow">
-      <div id="turn"></div>
+      <div id="turn">
+        <p *ngIf="answer.answer">Pokazujesz hasło: {{ answer.answer }}</p>
+        <p *ngIf="answer.player">Hasło pokazuje: {{ answer.player }}</p>
+      </div>
       <div id="output">
         <p *ngFor="let chatMessage of chat">
           <strong>{{ chatMessage.user }}</strong>: {{ chatMessage.message }}

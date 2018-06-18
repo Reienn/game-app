@@ -10,6 +10,10 @@ import { User } from '../models/user';
 })
 export class ChatComponent implements OnInit {
   user: User;
+  answer: {
+    player: string,
+    answer: string
+  };
   chat;
   isTyping;
   constructor(
@@ -21,6 +25,10 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.user.name = '';
+    this.answer = {
+      player: '',
+      answer: ''
+    };
     this.isTyping = '';
     this.chat = [];
     this.authenticationService.authUser().subscribe(
@@ -29,24 +37,37 @@ export class ChatComponent implements OnInit {
       },
       err => {
         this.authenticationService.logout();
-      });
+      }
+    );
+
+    this.socketService.getAnswer().subscribe(
+      answerData => {
+        if (answerData.player === this.user.name) {
+          this.answer.answer = answerData.answer;
+        } else {
+          this.answer.player = answerData.player;
+        }
+      }
+    );
 
     this.socketService.getChat().subscribe(
-        chat => {
-          this.chat = chat;
-        }
-      );
+      chat => {
+        this.chat = chat;
+      }
+    );
 
     this.socketService.getTyping().subscribe(
-        typing => {
-          this.isTyping = typing;
-        }
-      );
+      typing => {
+        this.isTyping = typing;
+      }
+    );
   }
 
   sendMessage(message) {
-    this.chat.push({user: this.user.name, message: message});
-    this.socketService.sendMessage(this.user.name, message);
+    if (message !== '') {
+      this.chat.push({user: this.user.name, message: message});
+      this.socketService.sendMessage(this.user.name, message);
+    }
   }
 
   typing() {

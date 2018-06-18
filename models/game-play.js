@@ -7,7 +7,7 @@ const GamePlaySchema = new mongoose.Schema({
     waiting: [],
     ready: [],
   },
-  
+  activePlayer: Number,
   chat: [{
     user: String,
     message: String

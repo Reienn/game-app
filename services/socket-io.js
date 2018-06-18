@@ -5,10 +5,10 @@ const newGameController = require('../controllers/new-game-play');
 module.exports.socketIo = function(server) {
   const io = require('socket.io')(server);
 
-  GamePlay.find({}, function(err, res){
-		if(err){throw err;}
-
-    io.on('connection', socket => {
+  io.on('connection', socket => {
+    
+    GamePlay.find({}, function(err, res){
+      if(err){throw err;}
       console.log('Dashboard socket connected');
       let gameList = [];
       res.forEach((el) => {
@@ -21,10 +21,7 @@ module.exports.socketIo = function(server) {
         newGameController.newGamePlay(io);
       });
     });
-
-
+  
   });
 
- 
-  
 }

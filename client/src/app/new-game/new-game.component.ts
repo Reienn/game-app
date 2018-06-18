@@ -12,6 +12,11 @@ import { User } from '../models/user';
 export class NewGameComponent implements OnInit, OnDestroy {
   ready: boolean;
   active: boolean;
+  isActivePlayer: boolean;
+  answer: {
+    player: string,
+    answer: string,
+  };
   user: User;
   playersList: {
     waiting: Array<string>,
@@ -31,6 +36,11 @@ export class NewGameComponent implements OnInit, OnDestroy {
     this.user = new User;
     this.active = false;
     this.ready = false;
+    this.isActivePlayer = false;
+    this.answer = {
+      player: '',
+      answer: ''
+    };
     this.win = {
       user: '',
       message: '',
@@ -57,11 +67,20 @@ export class NewGameComponent implements OnInit, OnDestroy {
 
     this.socketService.getPlayers().subscribe(
       players => {
-        this.playersList = players;
-        if (this.playersList.waiting.length === 0 && this.playersList.ready.length > 1) {
+        this.playersList = players.players;
+        if (players.active) {
           this.active = true;
-          this.socketService.activate();
+        } else {
+          if (this.playersList.waiting.length === 0 && this.playersList.ready.length > 1) {
+            this.socketService.activate();
+          }
         }
+      }
+    );
+
+    this.socketService.getAnswer().subscribe(
+      answerData => {
+        this.active = true;
       }
     );
 
