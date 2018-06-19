@@ -63,7 +63,7 @@ module.exports.createNamespace = function(io, el) {
         socket.disconnect();
         console.log('Game ' + el._id + ' is over');
       } else{
-        if (el.players.waiting.length === 0 && el.players.ready.length > 1 ) {
+        if (!el.active && el.players.waiting.length === 0 && el.players.ready.length > 1 ) {
           el.active = true;
           el.activePlayer === el.players.ready.length-1? el.activePlayer = 0 : el.activePlayer++;
           GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: el.players, active: el.active, cards: cards, chat: [], activePlayer: el.activePlayer }}, function(err){
@@ -79,6 +79,10 @@ module.exports.createNamespace = function(io, el) {
             console.log('Game ' + el._id + ' is active');
           });        
           el.socket.emit('answer', {answer: el.answer, player: el.players.ready[el.activePlayer]});
+        } else if (el.active) {
+            socket.emit('cards', el.cards);
+            socket.emit('chat', el.chat);
+            socket.emit('answer', {answer: el.answer, player: el.players.ready[el.activePlayer]});
         } else {
           GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: el.players }}, function(err){
             if(err){throw err;}

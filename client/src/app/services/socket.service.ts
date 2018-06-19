@@ -76,7 +76,6 @@ export class SocketService {
     return new Observable<Array<{}>>(observer => {
       this.socket.on('cards', cards => {
         observer.next(cards);
-        console.log('cards');
       });
     });
   }

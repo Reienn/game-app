@@ -67,7 +67,6 @@ export class NewGameComponent implements OnInit, OnDestroy {
 
     this.socketService.getPlayers().subscribe(
       players => {
-        console.log(players);
         this.playersList = players.players;
         if (players.active) {
           this.active = true;
