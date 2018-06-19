@@ -97,9 +97,8 @@ export class NewGameComponent implements OnInit, OnDestroy {
     this.socketService.updatePlayers({user: this.user.name, change: 'remove_waiting'});
     this.socketService.updatePlayers({user: this.user.name, change: 'add_ready'});
 
-    let indexW = this.playersList.waiting.indexOf(this.user.name);
-    if (indexW > -1) {
-      this.playersList.waiting.splice(indexW, 1);
+    if (this.playersList.waiting.indexOf(this.user.name) > -1) {
+      this.playersList.waiting.splice(this.playersList.waiting.indexOf(this.user.name), 1);
     }
 
     this.ready = true;
@@ -117,6 +116,10 @@ export class NewGameComponent implements OnInit, OnDestroy {
     this.ready = false;
     this.router.navigate(['/dashboard']);
 
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 
 }

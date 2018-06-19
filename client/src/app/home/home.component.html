@@ -1,5 +1,18 @@
 <div id="home">
-  <h1>Zagraj w IMAGO online!</h1>
+
+  <div id="navbar">
+    <span id="nav-title" class="hide">Kalambury obrazkowe</span>														
+  </div>
+
+  <h1>Kalambury obrazkowe</h1>
+  <h2>Zagraj z przyjaciółmi!</h2>
   <p *ngIf="err" class="err">Błąd. {{ err }}</p>
-  <a routerLink="/login"><button>Zaloguj się</button></a> lub <a routerLink="/signup"><button>Zarejestruj się</button></a>
+
+  <div id="auth">
+    <button (click)="showLogin = true" class="auth-button" [ngClass]="{'active-button': showLogin}">Zaloguj się</button>
+    <button (click)="showLogin = false" class="auth-button" [ngClass]="{'active-button': !showLogin}">Zarejestruj się</button>
+    <app-login *ngIf="showLogin"></app-login>
+    <app-signup *ngIf="!showLogin"></app-signup>
+  </div>
+
 </div>

@@ -8,11 +8,13 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   err: string;
+  showLogin: boolean;
   constructor(
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.showLogin = true;
     if (localStorage.getItem('currentUser')) {
       this.router.navigate(['/dashboard']);
     }

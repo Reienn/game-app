@@ -1,13 +1,9 @@
-<div id="auth">
-  <h1>Zagraj w IMAGO online!</h1>
-  <form id="signupForm" (ngSubmit)="signup()" ngNativeValidate>
-      <h2>Zaloguj się</h2>
-      <p *ngIf="err" class="err">{{ err }}</p>
-      <p *ngIf="msg">{{ msg }}</p>
-      <input type="email" [(ngModel)]="user.mail" placeholder="Adres e-mail" name="mail" required>
-      <input type="text" [(ngModel)]="user.name" placeholder="Nazwa użytkownika" name="name" required>
-      <input type="password" [(ngModel)]="user.psw" placeholder="Hasło" name="psw" required>
-      <input type="password" [(ngModel)]="user.psw2" placeholder="Powtórz hasło" name="psw2" required>
-      <button type="submit" id="signup">Utwórz konto</button>						
-  </form>
-</div>
+<form id="signupForm" (ngSubmit)="signup()" ngNativeValidate>
+  <p *ngIf="err" class="err">{{ err }}</p>
+  <p *ngIf="msg">{{ msg }}</p>
+  <input type="email" [(ngModel)]="user.mail" placeholder="Adres e-mail" name="mail" required>
+  <input type="text" [(ngModel)]="user.name" placeholder="Nazwa użytkownika" name="name" required>
+  <input type="password" [(ngModel)]="user.psw" placeholder="Hasło" name="psw" required>
+  <input type="password" [(ngModel)]="user.psw2" placeholder="Powtórz hasło" name="psw2" required>
+  <button type="submit" id="signup">Utwórz konto</button>						
+</form>

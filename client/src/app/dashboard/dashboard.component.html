@@ -1,21 +1,31 @@
 <div id="enter">
-  <h1>Zagraj w IMAGO online!</h1>
-  <p>Jesteś zalogowany jako <b><span id="username">{{ user.name }}</span></b></p><br>
-  <h3>Dostępne rozgrywki:</h3>
-  <p *ngIf="gamePlayList.length == 0">Brak dostępnych rozgrywek</p>
-  <div *ngIf="gamePlayList.length != 0" id="showTables">
-    <p *ngFor="let gamePlay of gamePlayList">
-      <button      
-      (click)="enterGame($event, gamePlay.id)"
-      [id]="gamePlay.id"
-      class="enterGame">
-        Dołącz
-    </button>
-      <span *ngFor="let player of gamePlay.players.waiting" > {{ player }}</span> 
-      <span *ngFor="let player of gamePlay.players.ready" > {{ player }}</span>
-    </p>
+  <div id="navbar">
+    <button id="toggle-nav" (click)="toggleNav()">&#9776;</button>
+    <span id="nav-title" class="hide">Kalambury obrazkowe</span>
+    <span id="nav-user" class="hide">
+      <span id="logged-as">Jesteś zalogowany jako: <b>{{user.name}}</b></span><button (click)="logout()">Wyloguj</button>	
+    </span>													
   </div>
-  <h3>Nowa rozgrywka:</h3>
-  <button (click)="newGamePlay()">Dodaj rozgrywkę</button><br><br>      
-  <br><button (click)="logout()">Wyloguj</button>
+  <div id="game-plays">
+    <h3>Dostępne rozgrywki:</h3>
+    <p *ngIf="gamePlayList.length == 0">Brak dostępnych rozgrywek</p>
+    <div *ngIf="gamePlayList.length != 0" id="showTables">
+      <div *ngFor="let gamePlay of gamePlayList" class="game-list">
+        <div class="game-details"><b>ID:</b> {{ gamePlay.id }}<br>
+          <b>Gracze:</b> 
+          <span *ngFor="let player of gamePlay.players.waiting" class="player-in"> {{ player }}</span> 
+          <span *ngFor="let player of gamePlay.players.ready" class="player-in"> {{ player }}</span>
+        </div>
+        <button      
+          (click)="enterGame($event, gamePlay.id)"
+          [id]="gamePlay.id"
+          class="enterGame">
+          Dołącz
+      </button>
+    </div>
+    </div>
+    <h3>Nowa rozgrywka:</h3>
+    <button (click)="newGamePlay()">Dodaj rozgrywkę</button><br><br>
+  </div>
+  
 </div>

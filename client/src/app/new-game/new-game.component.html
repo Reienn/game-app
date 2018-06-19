@@ -1,5 +1,5 @@
 <div id=game>
-  <div id="newGame" *ngIf="!active">
+  <div id="new-game" *ngIf="!active">
     <h2>Nowa gra</h2>
     <h3 *ngIf="this.playersList.waiting.length > 0">Gracze przy stole:</h3>
     <ul class="playersList">
@@ -32,10 +32,17 @@
   </div>
 
   <div id="navbar">
-    <button id="toggleNav" (click)="toggleNav()">&#9776;</button>
-    <div id="gameTitle">IMAGO online, <b><span id="username">{{ user.name }}</span></b></div>																							
+    <button id="toggle-nav" (click)="toggleNav()">&#9776;</button>
+    <span id="nav-title" class="hide">Kalambury obrazkowe</span>
+    <span id="nav-user" class="hide">
+      <span id="logged-as">Jesteś zalogowany jako: <b>{{user.name}}</b></span><button (click)="logout()">Wyloguj</button>	
+    </span>													
   </div>
 
   <app-table *ngIf="!win.status"></app-table>
+  <div class="game-play-info" *ngIf="!win.status">
+      <b>Gracze: </b><span *ngFor="let player of playersList.ready">{{ player }} </span>
+  </div>
   <app-chat *ngIf="!win.status"></app-chat>
+  
 </div>

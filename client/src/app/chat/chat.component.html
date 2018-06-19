@@ -1,12 +1,12 @@
+<div class="game-play-info answer">
+    <span *ngIf="answer.answer">Pokazujesz hasło: <b>{{ answer.answer }}</b></span>
+    <span *ngIf="answer.player">Hasło pokazuje: <b>{{ answer.player }}</b></span>
+  </div>
 <div id="imagoChat">
   <div id="chatWindow">
-      <div id="turn">
-        <p *ngIf="answer.answer">Pokazujesz hasło: {{ answer.answer }}</p>
-        <p *ngIf="answer.player">Hasło pokazuje: {{ answer.player }}</p>
-      </div>
       <div id="output">
         <p *ngFor="let chatMessage of chat">
-          <strong>{{ chatMessage.user }}</strong>: {{ chatMessage.message }}
+          <b>{{ chatMessage.user }}</b>: {{ chatMessage.message }}
         </p>
       </div>
       <div *ngIf="isTyping != ''" id="feedback">{{ isTyping }} pisze wiadomość...</div>

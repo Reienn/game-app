@@ -21,8 +21,6 @@ import { SocketService } from './services/socket.service';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignupComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]},
   {path: 'game/:id', component: NewGameComponent, canActivate: [AuthGuardService]}
 ];

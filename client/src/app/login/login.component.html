@@ -1,11 +1,7 @@
-<div id="auth">
-  <h1>Zagraj w IMAGO online!</h1>
-  <form id="loginForm" (ngSubmit)="login()" ngNativeValidate>
-      <h2>Zaloguj się</h2>
-      <p *ngIf="err" class="err">{{ err }}</p>       
-      <p *ngIf="msg">{{ msg }}</p>
-      <input type="text" [(ngModel)]="user.name" placeholder="Nazwa użytkownika" name="name" required>     
-      <input type="password" [(ngModel)]="user.psw" placeholder="Hasło" name="psw" required> 
-      <button type="submit" id="login">Zaloguj się</button>					
-  </form>
-</div>
+<form id="loginForm" (ngSubmit)="login()" ngNativeValidate>
+  <p *ngIf="err" class="err">{{ err }}</p>       
+  <p *ngIf="msg">{{ msg }}</p>
+  <input type="text" [(ngModel)]="user.name" placeholder="Nazwa użytkownika" name="name" required>     
+  <input type="password" [(ngModel)]="user.psw" placeholder="Hasło" name="psw" required> 
+  <button type="submit" id="login">Zaloguj się</button>					
+</form>
