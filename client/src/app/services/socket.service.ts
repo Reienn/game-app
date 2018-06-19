@@ -36,6 +36,14 @@ export class SocketService {
     this.socket.emit('new-game-play', 'add');
   }
 
+  joinNew() {
+    return new Observable<any>(observer => {
+      this.socket.on('join-new', newGameId => {
+        observer.next(newGameId);
+      });
+    });
+  }
+
   getPlayers() {
     return new Observable<any>(observer => {
       this.socket.on('players', players => {
@@ -64,14 +72,11 @@ export class SocketService {
     this.socket.emit('players', playersUpdate);
   }
 
-  activate() {
-    this.socket.emit('activate', true);
-  }
-
   getCards() {
     return new Observable<Array<{}>>(observer => {
       this.socket.on('cards', cards => {
         observer.next(cards);
+        console.log('cards');
       });
     });
   }

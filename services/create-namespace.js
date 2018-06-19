@@ -11,13 +11,19 @@ function emitList(io) {
   });
 };
 
+const cards = [
+  {id: '001', x: 100, y: 20, fill: '#444444'},
+  {id: '002', x: 250, y: 20, fill: '#ff550d'},
+  {id: '003', x: 400, y: 20, fill: '#800080'},
+  {id: '004', x: 550, y: 20, fill: '#0c64e8'},
+  {id: '005', x: 100, y: 150, fill: '#b21a1a'}
+];
+
 module.exports.createNamespace = function(io, el) {
 
   el.socket = io.of('/' + el._id).on('connection', socket => {
     console.log('Socket connected, game id: ' + el._id);
 
-    socket.emit('cards', el.cards);
-    socket.emit('chat', el.chat);
     socket.emit('players', {players: el.players, active: el.active});
 
     socket.on('players', updated => {
@@ -49,32 +55,38 @@ module.exports.createNamespace = function(io, el) {
         default:
           throw('Unknown update request');
       }
-      if(el.players.waiting.length == 0 && el.players.ready.length == 0){
+      if (el.players.waiting.length === 0 && el.players.ready.length === 0) {
         GamePlay.deleteOne({_id: el._id}, function(err){
           if(err){throw err;}
+          emitList(io);
         });
         socket.disconnect();
         console.log('Game ' + el._id + ' is over');
-      } else {
-        GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: {waiting: el.players.waiting, ready: el.players.ready} }}, function(err){
-          if(err){throw err;}
-          emitList(io);
-        });
+      } else{
+        if (el.players.waiting.length === 0 && el.players.ready.length > 1 ) {
+          el.active = true;
+          el.activePlayer === el.players.ready.length-1? el.activePlayer = 0 : el.activePlayer++;
+          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: el.players, active: el.active, cards: cards, chat: [], activePlayer: el.activePlayer }}, function(err){
+            if(err){throw err;}
+            emitList(io);
+            GamePlay.find({_id: el._id}, function(err, res){
+              if(err){throw err;}
+              el.cards = res[0].cards;
+              el.chat = res[0].chat;
+              el.socket.emit('cards', el.cards);
+              el.socket.emit('chat', el.chat);
+            });
+            console.log('Game ' + el._id + ' is active');
+          });        
+          el.socket.emit('answer', {answer: el.answer, player: el.players.ready[el.activePlayer]});
+        } else {
+          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: el.players }}, function(err){
+            if(err){throw err;}
+            emitList(io);
+          }); 
+        }      
         el.socket.emit('players', {players: el.players, active: el.active});
-      }
-      
-    });
-
-    socket.on('activate', status => {
-      if (!el.active) {
-        el.active = status;
-        console.log('Game ' + el._id + ' active')
-        GamePlay.findOneAndUpdate({_id: el._id}, { $set: { active: el.active }}, function(err){
-          if(err){throw err;}
-          emitList(io);
-        });
-        el.socket.emit('answer', {answer: el.answer, player: el.players.ready[el.activePlayer]});
-      }
+      } 
       
     });
 
@@ -89,7 +101,11 @@ module.exports.createNamespace = function(io, el) {
     socket.on('chat', updated => {
       if (updated.message == el.answer){
         updated.status = true;
-        el.socket.emit('win', updated);
+        el.active = false;
+        GamePlay.findOneAndUpdate({_id: el._id}, { $set: { active: el.active }}, function(err){
+          if(err){throw err;}
+          el.socket.emit('win', updated);
+        });
       } else {
         el.chat.push(updated);
         GamePlay.findOneAndUpdate({_id: el._id}, { $set: { chat: el.chat }}, function(err){
@@ -97,7 +113,6 @@ module.exports.createNamespace = function(io, el) {
         });
         socket.broadcast.emit('chat', el.chat);
       }
-     
     });
 
     socket.on('typing', user => {

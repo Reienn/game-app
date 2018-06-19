@@ -37,7 +37,14 @@ export class DashboardComponent implements OnInit {
     this.socketService.getGameList().subscribe(
       gameList => {
         this.gamePlayList = gameList;
-      });
+      }
+    );
+
+    this.socketService.joinNew().subscribe(
+      newGameId => {
+        this.router.navigate(['game/' + newGameId]);
+      }
+    );
   }
 
   newGamePlay() {

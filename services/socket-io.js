@@ -18,7 +18,7 @@ module.exports.socketIo = function(server) {
       socket.emit('game-list', gameList);
 
       socket.on('new-game-play', data => {
-        newGameController.newGamePlay(io);
+        newGameController.newGamePlay(io, socket);
       });
     });
   

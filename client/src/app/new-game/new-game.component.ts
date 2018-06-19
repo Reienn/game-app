@@ -67,13 +67,10 @@ export class NewGameComponent implements OnInit, OnDestroy {
 
     this.socketService.getPlayers().subscribe(
       players => {
+        console.log(players);
         this.playersList = players.players;
         if (players.active) {
           this.active = true;
-        } else {
-          if (this.playersList.waiting.length === 0 && this.playersList.ready.length > 1) {
-            this.socketService.activate();
-          }
         }
       }
     );
@@ -87,6 +84,8 @@ export class NewGameComponent implements OnInit, OnDestroy {
     this.socketService.getWin().subscribe(
       win => {
         this.win = win;
+        this.socketService.updatePlayers({user: this.user.name, change: 'add_waiting'});
+        this.socketService.updatePlayers({user: this.user.name, change: 'remove_ready'});
       }
     );
   }
@@ -105,6 +104,12 @@ export class NewGameComponent implements OnInit, OnDestroy {
     }
 
     this.ready = true;
+  }
+
+  nextTurn() {
+    this.active = false;
+    this.ready = false;
+    this.win.status = false;
   }
 
   leaveGame() {

@@ -27,6 +27,7 @@
       <h3>Wygrywa {{ win.user }}</h3>
       <p>Hasło brzmiało: {{ win.message }}</p>
     </div>
+    <button (click)="nextTurn()">Jeszcze raz</button><br><br>
     <button (click)="leaveGame()">Wyjdź</button>
   </div>
 

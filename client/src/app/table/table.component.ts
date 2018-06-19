@@ -45,6 +45,7 @@ export class TableComponent implements OnInit {
 
     this.socketService.getAnswer().subscribe(
       answerData => {
+        console.log('table get');
         if (answerData.player === this.user.name) {
           this.isActivePlayer = true;
         }
