@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['dashboard']);
     }
     if (this.authGuardService.getErr()) {
       this.err = this.authGuardService.getErr();

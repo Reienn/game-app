@@ -1,5 +1,17 @@
 <div id="table" #tableElement>
     <svg id="svg" height="700" width="800">
+        <pattern id="circle" patternUnits="objectBoundingBox" width="1" height="1">
+            <circle cx="50"  cy="50" r="40" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#d40000;stroke-width:10;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"/>
+        </pattern>
+        <pattern id="star" patternUnits="objectBoundingBox" width="1" height="1">
+            <path d="m55,237 74-228 74,228L9,96h240" transform="scale(0.39)" fill="#ffcc00ff"/>
+        </pattern>
+        <pattern id="plus" patternUnits="objectBoundingBox" width="1" height="1">
+            <path  d="M 37.961421,6.2759386 V 36.529035 H 7.7083253 V 56.402218 H 37.961421 V 86.656057 H 57.834584 V 56.402218 H 88.08844 V 36.529035 H 57.834584 V 6.2759386 Z" transform="scale(1.05)" fill="#aad400"/>
+        </pattern>
+        <pattern id="triangle" patternUnits="objectBoundingBox" width="1" height="1">
+            <path  d="M 62.701725,57.886477 5.3604393,57.886476 34.031082,8.2274666 Z" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#5500d4;stroke-width:6;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" transform="scale(1.45)"/>
+        </pattern>
         <rect *ngFor="let card of cards"            
             class="gameCard"
             [id]="card.id"

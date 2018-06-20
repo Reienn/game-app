@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,14 +10,24 @@ export class HomeComponent implements OnInit {
   err: string;
   showLogin: boolean;
   constructor(
-    private router: Router
+    private router: Router,
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.showLogin = true;
+    if (this.router.url === '/login') {
+      this.showLogin = true;
+    } else if (this.router.url === '/signup') {
+      this.showLogin = false;
+    }
+
     if (localStorage.getItem('currentUser')) {
       this.router.navigate(['/dashboard']);
     }
+  }
+
+  display(display) {
+    this.router.navigate(['/' + display]);
   }
 
 }

@@ -11,6 +11,7 @@ export class SignupComponent implements OnInit {
   err: string;
   msg: string;
   user: any = {};
+
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
@@ -40,7 +41,8 @@ export class SignupComponent implements OnInit {
 
       this.authenticationService.signup(this.user.name, this.user.psw, this.user.mail).subscribe(
         user => {
-          this.router.navigate(['login']);
+          this.err = '';
+          this.router.navigate(['/login']);
         },
         err => {
           this.err = err;

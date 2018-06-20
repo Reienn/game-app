@@ -9,8 +9,8 @@
   <p *ngIf="err" class="err">Błąd. {{ err }}</p>
 
   <div id="auth">
-    <button (click)="showLogin = true" class="auth-button" [ngClass]="{'active-button': showLogin}">Zaloguj się</button>
-    <button (click)="showLogin = false" class="auth-button" [ngClass]="{'active-button': !showLogin}">Zarejestruj się</button>
+    <button (click)="display('login')" class="auth-button" [ngClass]="{'active-button': showLogin}">Zaloguj się</button>
+    <button (click)="display('signup')" class="auth-button" [ngClass]="{'active-button': !showLogin}">Zarejestruj się</button>
     <app-login *ngIf="showLogin"></app-login>
     <app-signup *ngIf="!showLogin"></app-signup>
   </div>

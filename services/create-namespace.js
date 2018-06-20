@@ -12,10 +12,10 @@ function emitList(io) {
 };
 
 const cards = [
-  {id: '001', x: 100, y: 20, fill: '#444444'},
-  {id: '002', x: 250, y: 20, fill: '#ff550d'},
-  {id: '003', x: 400, y: 20, fill: '#800080'},
-  {id: '004', x: 550, y: 20, fill: '#0c64e8'},
+  {id: '001', x: 100, y: 20, fill: 'url(#circle)'},
+  {id: '002', x: 250, y: 20, fill: 'url(#star)'},
+  {id: '003', x: 400, y: 20, fill: 'url(#plus)'},
+  {id: '004', x: 550, y: 20, fill: 'url(#triangle)'},
   {id: '005', x: 100, y: 150, fill: '#b21a1a'}
 ];
 
