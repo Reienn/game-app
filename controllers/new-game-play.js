@@ -15,7 +15,6 @@ function emitList(io) {
 module.exports.newGamePlay = function(io, socket){
   let gamePlay = new GamePlay({
     active: false,
-    answer: 'Gwiezdne Wojny',
     players: {
       waiting: [],
       ready: [],

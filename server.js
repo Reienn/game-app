@@ -17,7 +17,7 @@ const server = app.listen(port, (err) => {
 });
 socketIoService.socketIo(server);
 
-mongoose.connect('mongodb://admin:Admin100@ds125388.mlab.com:25388/game-app');
+mongoose.connect('mongodb://127.0.0.1:27017/game-app');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {

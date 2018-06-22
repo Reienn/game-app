@@ -18,6 +18,8 @@ const cards = [
   {id: '004', x: 550, y: 20, fill: 'url(#triangle)'},
   {id: '005', x: 100, y: 150, fill: '#b21a1a'}
 ];
+const guessItems = ['Harry Potter', 'Gwiezdne Wojny', 'Władca Pierścieni', 'Incepcja', 'Terminator', 'Ojciec chrzestny', 'Król Lew', 'Blade Runner'];
+let guessNumber = guessItems.length - 1;
 
 module.exports.createNamespace = function(io, el) {
 
@@ -66,7 +68,8 @@ module.exports.createNamespace = function(io, el) {
         if (!el.active && el.players.waiting.length === 0 && el.players.ready.length > 1 ) {
           el.active = true;
           el.activePlayer === el.players.ready.length-1? el.activePlayer = 0 : el.activePlayer++;
-          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: el.players, active: el.active, cards: cards, chat: [], activePlayer: el.activePlayer }}, function(err){
+          el.answer = guessItems[Math.floor(Math.random()*guessNumber)];
+          GamePlay.findOneAndUpdate({_id: el._id}, { $set: { players: el.players, active: el.active, cards: cards, chat: [], activePlayer: el.activePlayer, answer: el.answer }}, function(err){
             if(err){throw err;}
             emitList(io);
             GamePlay.find({_id: el._id}, function(err, res){
