@@ -16,7 +16,10 @@ const cards = [
   {id: '002', x: 250, y: 20, fill: 'url(#star)'},
   {id: '003', x: 400, y: 20, fill: 'url(#plus)'},
   {id: '004', x: 550, y: 20, fill: 'url(#triangle)'},
-  {id: '005', x: 100, y: 150, fill: '#b21a1a'}
+  {id: '005', x: 100, y: 150, fill: 'url(#square)'},
+  {id: '006', x: 250, y: 150, fill: 'url(#heart)'},
+  {id: '007', x: 400, y: 150, fill: 'url(#spiral)'},
+  {id: '008', x: 550, y: 150, fill: 'url(#drop)'}
 ];
 const guessItems = ['Harry Potter', 'Gwiezdne Wojny', 'Władca Pierścieni', 'Incepcja', 'Terminator', 'Ojciec chrzestny', 'Król Lew', 'Blade Runner'];
 let guessNumber = guessItems.length - 1;

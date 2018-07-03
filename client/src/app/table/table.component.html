@@ -12,6 +12,18 @@
         <pattern id="triangle" patternUnits="objectBoundingBox" width="1" height="1">
             <path  d="M 62.701725,57.886477 5.3604393,57.886476 34.031082,8.2274666 Z" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#5500d4;stroke-width:6;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" transform="scale(1.45)"/>
         </pattern>
+        <pattern id="heart" patternUnits="objectBoundingBox" width="1" height="1">
+            <path  d="m 18.383148,6.3330748 c -0.502036,0.00287 -1.017208,0.023223 -1.54628,0.062288 C 14.640553,6.5575344 4.8824542,8.5787717 5.162472,22.148816 c 0.2648969,12.83687 6.789934,18.23388 28.868607,37.798361 v 0.0094 C 56.109752,40.392044 62.634799,34.995034 62.899692,22.158164 63.179713,8.5881198 53.422022,6.5668817 51.225715,6.4047103 39.93893,5.5713127 34.847927,13.22999 34.031079,18.080808 v -0.0094 C 33.252515,13.448025 28.591238,6.2738805 18.383148,6.3330716 Z" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#aa0088;stroke-width:6;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" transform="scale(1.45)"/>
+        </pattern>
+        <pattern id="square" patternUnits="objectBoundingBox" width="1" height="1">
+            <rect x="10" y="10" width="80" height="80" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#2ca089;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"/> 
+        </pattern>
+        <pattern id="spiral" patternUnits="objectBoundingBox" width="1" height="1">
+            <path  d="m 33.863903,34.636806 c 1.484462,0 0.732382,2.001026 0,2.467275 -1.984708,1.263504 -4.326071,-0.555688 -4.934548,-2.467274 -1.088423,-3.41938 1.674029,-6.709919 4.934548,-7.401823 4.784942,-1.015397 9.136275,2.797371 9.869097,7.401822 0.976735,6.137009 -3.921156,11.579056 -9.869096,12.336371 C 26.379027,47.926182 19.833915,41.928352 19.060258,34.636807 18.123255,25.805769 25.228623,18.151229 33.863902,17.365887 44.04028,16.440389 52.807984,24.657701 53.602096,34.636806 54.518931,46.158077 45.186895,56.041336 33.863904,56.842274 20.998003,57.752351 9.9975629,47.303724 9.1911614,34.636808 8.2865008,20.426442 19.853034,8.3076637 33.863902,7.4967907 39.670586,7.1607313 45.511386,8.7329653 50.39648,11.881636" style="fill:none;fill-rule:evenodd;stroke:#ff6600;stroke-width:5.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" transform="scale(1.6)"/>
+        </pattern>
+        <pattern id="drop" patternUnits="objectBoundingBox" width="1" height="1">
+            <path  d="m 52.204541,44.169202 c 0,9.836973 -7.974438,17.811425 -17.811425,17.811425 -9.836972,0 -17.811426,-7.974452 -17.811426,-17.811425 0,-9.836988 17.811426,-37.3397809 17.811426,-37.3397809 0,0 17.811425,27.5027929 17.811425,37.3397809" style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#00ccff;stroke-width:6;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" transform="scale(1.45)"/>
+        </pattern>
         <rect *ngFor="let card of cards"            
             class="gameCard"
             [id]="card.id"
