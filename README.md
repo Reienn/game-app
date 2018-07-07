@@ -1,6 +1,8 @@
 # Real-time multiplayer guessing game
 
-Real-time multiplayer guessing game built with MEAN stack and Web Sockets.
+Real-time multiplayer guessing game built with MEAN stack and Web Sockets.<br>
+User can join existing gameplays or add a new one. The gameplay starts when minimum two players join.<br>
+The active player shows the word by creating a picture from draggable SVG symbols, other players write answers using real-time chat.
 
 ## Getting started
 
