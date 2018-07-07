@@ -1,8 +1,8 @@
-#Real-time multiplayer guessing game
+# Real-time multiplayer guessing game
 
 Real-time multiplayer guessing game built with MEAN stack and Web Sockets.
 
-##Getting started
+## Getting started
 
 * Download and install [MongoDB](https://www.mongodb.com/download-center#community)
 * In MongoDB\bin run `mongo.exe`
@@ -24,7 +24,7 @@ npm install
 ```
 node server.js
 ```
-* In client catalogue install Angular dependencies
+* In client directory install Angular dependencies
 ```
 npm install
 ```
