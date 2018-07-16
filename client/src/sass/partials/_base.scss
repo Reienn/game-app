@@ -1,0 +1,60 @@
+body{
+    font-family: $primary-font;
+    margin: 0;
+    padding: 0;
+}
+
+%clear{
+    margin: 0 auto;
+    padding: 0;
+}
+
+#wrapper{
+    @extend %clear;
+}
+
+%main{
+    margin: 0 auto;
+    min-width: 300px;
+    text-align: center;
+}
+    
+#home, #enter{
+    @extend %main;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    background: url('../assets/bg1.svg') center center;
+    background-size: 100% auto;
+    background-position: fixed;
+    overflow-x: hidden;
+}
+    
+#auth{
+    @extend %main;
+    width: 30%;
+    padding: 3%;
+    background: $light-bg-color;
+}
+
+@media screen and (max-width: 750px){
+    .hide{
+        display: none;
+    }
+    .show{
+        display: block;
+    }
+}
+
+input{
+    padding: 12px 20px;
+    box-sizing: border-box;
+    background: $input-bg-color;
+    border: 0;
+    display: block;
+    width: 100%;
+    background: $light-font-color;
+    border-bottom: 1px solid $input-bg-color;
+    font-family: Tahoma;
+    font-size: 16px;
+}

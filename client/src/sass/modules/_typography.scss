@@ -1,0 +1,19 @@
+$primary-font: Tahoma;
+
+h1, h2{
+    color: $light-font-color;
+    margin: 7% 0 0;
+    font-size: 280%;
+    @media screen and (max-width: 750px){
+        margin-top: 70px;
+    }
+}
+    
+h2{
+    margin: 1% 0 2%;
+    font-size: 160%;
+}
+
+.err{
+    color: $err-font-color;
+}

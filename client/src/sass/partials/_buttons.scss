@@ -1,0 +1,28 @@
+button{
+    background: $button-bg-color;
+    color: $light-font-color;
+    font-size: 18px;
+    border: 0;
+    margin: 0;
+    padding: 12px;
+    border-radius: 0 0 2px 2px;
+    &:hover{
+        background: $dark-bg-color !important;
+        cursor: pointer;
+    }
+    &:disabled{
+        background: $button-disabled-bg-color;
+        pointer-events: none;
+    }
+}
+.active-button{
+    background: $dark-bg-color;
+}
+.enterGame{
+    width: 150px;
+    margin: 10px 0;
+}  
+.auth-button{
+    width: 50%;
+}
+

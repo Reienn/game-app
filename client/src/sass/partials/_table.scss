@@ -1,0 +1,18 @@
+#table{
+    width: 800px;
+    height: 85vh;
+    margin: 70px 10px 20px 20px;
+    padding: 0;
+    float: left;
+    border: 1px solid $gray-border-color;
+    box-shadow: 1px 2px 5px $border-color;
+    background: $light-gray-bg-color;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    @media screen and (max-width: 1200px){
+        float: none;
+        margin: 70px auto 20px;
+        height: 700px;
+        overflow: hidden;
+    }
+}    

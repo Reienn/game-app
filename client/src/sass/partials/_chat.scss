@@ -1,0 +1,51 @@
+#imagoChat{
+    height: calc(83vh - 135px);
+    min-width: 300px;
+    width: calc(100% - 870px); 
+    margin: 0 20px 20px 10px;
+    padding: 0;
+    border: 1px solid $gray-border-color;
+    box-shadow: 1px 2px 5px $border-color;
+    border-radius: 2px;
+    float: right;
+    background: $light-font-color;
+    @media screen and (max-width: 1200px){
+        width: 70%;
+        float: none;
+        margin: 0 auto 20px;
+    }
+    #chatWindow{
+        height: calc(75vh - 120px);
+        background: $light-gray-bg-color;
+        overflow-y: scroll;
+        @media screen and (max-width: 1200px){
+            overflow: auto;
+        }
+        #output p{
+            padding: 14px 0px; 
+            margin: 0 20px;
+            border-bottom: 1px solid $gray-border-color;
+            color: $dark-font-color;
+        }
+        #feedback{
+            text-align: center;
+            margin: 5px 0;
+        }
+    }
+    #message{
+        width: 80%;
+        float: left;
+    }
+    #send{
+        width: 20%;
+    }
+}
+
+
+
+
+
+
+
+
+

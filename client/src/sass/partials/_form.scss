@@ -1,0 +1,10 @@
+form{
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 14px);
+    border: 7px solid $dark-bg-color;
+}
+    
+#login, #signup{
+    width: 100%;
+}

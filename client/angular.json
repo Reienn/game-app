@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/sass/main.scss"
             ],
             "scripts": []
           },
@@ -123,5 +123,10 @@
       }
     }
   },
-  "defaultProject": "game-app"
+  "defaultProject": "game-app",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

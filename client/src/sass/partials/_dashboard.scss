@@ -1,0 +1,18 @@
+#game-plays{
+    margin: 5% auto;
+    padding: 2%;
+    width: 50%;
+    background: $light-bg-color;
+    .game-list{
+        width: 80%;
+        margin: 2% auto 0;
+        padding: 2%;
+        background: $medium-bg-color;
+        color: $light-font-color;
+        .game-details{
+            width: 60%;
+            float: left;
+            line-height: 1.6;
+        }
+    }
+}
